@@ -1,0 +1,24 @@
+{
+  "name": "coworkers-1337-api",
+  "version": "1.0.0",
+  "description": "1337 Coworkers CRUD api",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeworm47/coworkers-1337-api.git"
+  },
+  "author": "Hesam Rasouli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeworm47/coworkers-1337-api/issues"
+  },
+  "homepage": "https://github.com/codeworm47/coworkers-1337-api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14"
+  }
+}
