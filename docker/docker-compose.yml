@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mongodb:
+      image: mongo:latest
+      container_name: mongodb
+      hostname: mongodb
+      volumes:
+          - ./db/.docker/mongodb/mongod.conf:/etc/mongod.conf
+          - ./db/.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+          - ./db/.docker/mongodb/data/db/:/data/db/
+          - ./db/.docker/mongodb/data/log/:/var/log/mongodb/
+      environment:
+          MONGO_INITDB_ROOT_USERNAME: "sa"
+          MONGO_INITDB_ROOT_PASSWORD: "123"
+          MONGO_INITDB_DATABASE: "config"
+      ports:
+          - "27018:27017"
+      command: ["-f", "/etc/mongod.conf/mongod.conf"]
