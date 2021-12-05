@@ -1,7 +1,7 @@
-class EntityException extends Error{
+class BaseException extends Error{
     constructor(message) {
         super(message);
         Error.captureStackTrace(this, this.constructor);
     }
 }
-module.exports = EntityException
+module.exports = BaseException

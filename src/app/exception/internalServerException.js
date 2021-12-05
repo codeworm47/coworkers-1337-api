@@ -1,11 +1,11 @@
-const EntityException = require('./entityException')
-class InternalServerException extends EntityException {
+const BaseException = require('./baseException')
+class InternalServerException extends BaseException {
 
     constructor(message, err = null) {
         super(message);
         this.name = this.constructor.name
         if (err){
-            this.args = err;
+            this.err = err;
         }
     }
 }

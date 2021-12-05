@@ -1,5 +1,5 @@
-const EntityException = require('./entityException')
-class NotFoundException extends EntityException {
+const BaseException = require('./baseException')
+class NotFoundException extends BaseException {
 
     constructor(message, id) {
         super(message);
