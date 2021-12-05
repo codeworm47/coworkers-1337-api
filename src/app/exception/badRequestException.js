@@ -1,8 +1,9 @@
 const BaseException = require("./baseException")
 class BadRequestException extends BaseException{
-    constructor(message, verb) {
-        super(message);
+    constructor(message) {
+        super(message, 400);
         this.name = this.constructor.name
-        this.verb = verb;
     }
 }
+
+module.exports = BadRequestException

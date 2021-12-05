@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const logger = require('./config/logger')
 const config = require('./config/config')
 const mongoose = require('./config/mongoose')
+const cors = require('cors')
 
 // create express app
 const app = express();
@@ -12,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+app.use(cors());
 
 //initializing mongoose and connecting it to MongoDB
 mongoose.init()
