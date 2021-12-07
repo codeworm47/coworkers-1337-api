@@ -13,10 +13,10 @@ const findById = (id) => {
     return Coworker.findById(id)
         .then(coworker => {
             if (!coworker) {
-               throw notFoundError(id);
+               return Promise.reject(notFoundError(id));
             }
             return mapResponseObject(coworker);
-        }).catch(err => handleError(err, 'find coworker by id', id))
+        }).catch(err => throwError(err, 'find coworker by id', id))
 }
 
 const find = (req) => {
@@ -41,26 +41,10 @@ const find = (req) => {
             const coworkerCount = result[1];
             return {'data': mapResponseList(coworker), 'totalLength': coworkerCount}
         })
-        .catch(err => handleError(err, 'find coworkers'))
+        .catch(err => throwError(err, 'find coworkers'))
 }
 
 const save = (req) => {
-    // return Promise.resolve(req)
-    //     .then(r => {
-    //         if (_.isNil(r.body) || _.isEmpty(r.body)) {
-    //             throw new BadRequestException("body cannot be empty");
-    //         }
-    //         const doc = extractCoworkerData(req.body);
-    //         if (_.isEmpty(doc)) {
-    //             throw new BadRequestException("invalid body", "");
-    //         }
-    //         if (!_.isNil(doc.id)) {
-    //             return update(doc.id, doc);
-    //         } else {
-    //             return insert(doc);
-    //         }
-    //     })
-
     if (_.isNil(req.body) || _.isEmpty(req.body)) {
         return Promise.reject(new BadRequestException("body cannot be empty"));
     }
@@ -83,7 +67,7 @@ const insert = (doc) => {
             logger.info("coworker inserted successfully : %s", coworker);
             return mapResponseObject(coworker);
         })
-        .catch(err => handleError(err, 'insert coworker'))
+        .catch(err => throwError(err, 'insert coworker'))
 }
 
 const update = (id, doc) => {
@@ -96,7 +80,7 @@ const update = (id, doc) => {
             }
             logger.info("coworker updated successfully : %s", coworker);
             return mapResponseObject(coworker);
-        }).catch(err => handleError(err, 'update coworker', id))
+        }).catch(err => throwError(err, 'update coworker', id))
 }
 
 const notFoundError = (id) => {
@@ -105,7 +89,7 @@ const notFoundError = (id) => {
     return new NotFoundException(msg, id);
 }
 
-const handleError = (err, operation, id = null) => {
+const throwError = (err, operation, id = null) => {
     const msg = `an error occurred during ${operation} : ${err.message}`;
     logger.error(msg, err);
     if (err instanceof BaseException){

@@ -1,29 +1,32 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const logger = require('./config/logger')
-const config = require('./config/config')
-const mongoose = require('./config/mongoose')
-const cors = require('cors')
+const logger = require('./config/logger');
+const config = require('./config/config');
+const mongoose = require('./config/mongoose');
+const cors = require('cors');
+const globalErrorHandler = require("./app/middleware/globalErrorHandler")
+const authentication = require("./app/middleware/authentication");
 
-// create express app
+// create an express app
 const app = express();
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
-
-// parse application/json
-app.use(bodyParser.json())
-
-app.use(cors());
 
 //initializing mongoose and connecting it to MongoDB
 mongoose.init()
 
+//registering json parser middleware for parsing application/json
+app.use(bodyParser.json())
+//registering cors middleware to allow the apis be called from other origins.
+app.use(cors());
+//registering Bearer token (JWT token) authentication middleware.
+app.use(authentication());
 //registering api routes
-require('./app/route/coworker.route')(app);
+require('./app/routes')(app);
+//registering global error handler middleware to capture and handle all the errors throughout the app.
+app.use(globalErrorHandler());
 
-// listen for requests
-app.listen(3001, () => {
-    logger.info(`Server is listening on port ${config.server.port}`);
+// starting the server and listening for requests
+const port = config.server.port;
+app.listen(port, () => {
+    logger.info(`Server is listening on port ${port}`);
     require('./dataInitializer').init()
 });

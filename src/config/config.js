@@ -1,4 +1,8 @@
 module.exports = {
+    auth:{
+        enabled: process.env.AUTH_ENABLED || false,
+        jwtSecret: process.env.JWT_SECRET
+    },
     server: {
         port: process.env.SERVER_PORT || "3001"
     },
@@ -6,6 +10,6 @@ module.exports = {
         level: process.env.LOG_LEVEL || "info"
     },
     db: {
-        uri: "mongodb://sa:123@localhost:27018/coworkersDB?retryWrites=true"
+        uri: process.env.MONGO_URI
     }
 }

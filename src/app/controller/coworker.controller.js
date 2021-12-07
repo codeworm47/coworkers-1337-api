@@ -1,30 +1,23 @@
-const service = require('../service/coworker.service')
-const BaseException = require('../exception/baseException')
+const service = require('../service/coworker.service');
+const errorUtil = require('../util/errorUtil');
 
-const findById = (req, res) => {
+const findById = (req, res, next) => {
     return service.findById(req.params.id)
         .then(data => res.send(data))
-        .catch(err => handleError(err, res))
+        .catch(err => next(err));
 }
 
-const find = (req, res) => {
+const find = (req, res, next) => {
     return service.find(req)
         .then(data => res.send(data))
-        .catch(err => handleError(err, res))
+        .catch(err => next(err));
 }
 
-const save = (req, res) => {
+const save = (req, res, next) => {
     return service.save(req)
         .then(data => res.send(data))
-        .catch(err => handleError(err, res))
-}
+        .catch(err => next(err));
 
-const handleError = (err, res) => {
-    if (err instanceof BaseException){
-        res.status(err.errorCode).send({'errorName': err.name, 'errorMessage': err.message, 'timestamp': new Date()});
-    } else {
-        res.status(500).send({'errorMessage': `an unknown error occurred ${err.message}`, 'timestamp': new Date()})
-    }
 }
 
 module.exports = {findById, find, save}
