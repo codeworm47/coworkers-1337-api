@@ -26,7 +26,16 @@ it's best to use an ORM to have a robust mapping layer between database and appl
 2. Go to docker directory -> `cd docker`
 3. In terminal -> `docker-compose up` OR `docker-compose up -d`
 4. After docker build completed, you can access the web apis at port 3001 -> `http://localhost:3001`
+# Public URL 
+I've deployed apis to the web. it can be accessed via **http://1337-be-test.tpbot.ir/**
 
+e.g **http://1337-be-test.tpbot.ir/api/coworkers**
+# Features
+- Get all coworkers (/api/coworkers)
+- Pagination (/api/coworkers?start=0&end=20)
+- Basic filtering (/api/coworkers?filter=magnus OR /api/coworkers?filter=ma(.*)us)
+- Editing of coworkers (/api/coworker)
+- JWT authentication (/api/login)
 # Useful Hints
 - During docker-compose up OR up -d if you got PermissionDenied error and you're running on Linux, simply run the command again with sudo e.g `sudo docker-compose up -d` 
 - All the environment variables resided in .env file in docker directory.
@@ -34,7 +43,7 @@ it's best to use an ORM to have a robust mapping layer between database and appl
   is not sending the token in the subsequent calls even though token api call was successful and UI also stored the token value into local storage.
  **So if you want the authentication enforcement happens (throwing 401 if token is missing or is invalid) you just simply need to set the value of `AUTH_ENABLED` to true in the .env file and restart the container.**
 
-# Data Initialization
+# Data Initialization and Persistence
 for data initialization into Mongo collection (coworkers collection), I fetched all the coworkers data 
 via https://backend-assignment.1337co.de/api/coworkers?end=300&filter=&start=0 once and stored them all into a json file in the root of the project (`sampleData.json`).
 When the app starts up I read the data from that file and store them into mongo if not already stored. 
