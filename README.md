@@ -50,4 +50,6 @@ As mentioned above all the environments reside in `docker/.env` with proper valu
 - MONGO_URI -> MongoDB connection string.
 - JWT_SECRET -> private key (secret) for signing JWT tokens
 - LOG_LEVEL -> Log level (e.g debug, info, etc) (defaulted to info)
-- AUTH_ENABLED -> if set to true, all the requests (except `/api/login`) must have valid JWT token in their header (authorization header) otherwise it would throw 401 (defaulted to false) 
+- AUTH_ENABLED -> if set to true, all the requests (except `/api/login`) must have valid JWT token in their header (authorization header) otherwise it would throw 401 (defaulted to false)
+
+*For any further questions/issues contact me at hesam.rasouli1@gmail.com*
