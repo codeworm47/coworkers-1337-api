@@ -3,10 +3,12 @@ const logger = require('./logger')
 const mongoose = require('mongoose');
 
 const init = () => {
+    logger.info("running");
     mongoose.Promise = global.Promise;
     // Connecting to the database
     mongoose.connect(dbConfig.db.uri, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        serverSelectionTimeoutMS:60000
     }).then(() => {
         logger.info("Successfully connected to the database");
     }).catch(err => {

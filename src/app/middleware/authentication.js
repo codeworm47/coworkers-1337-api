@@ -6,7 +6,7 @@ function middlewareWrapper() {
     return authentication;
 }
 const authentication = (req, res, next) => {
-    if (!config.auth.enabled || req.originalUrl === '/api/login'){
+    if (!JSON.parse(config.auth.enabled) || req.originalUrl === '/api/login'){
         next();
     } else{
         const authorizationHeader = req.headers['authorization'];

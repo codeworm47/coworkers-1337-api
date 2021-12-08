@@ -1,18 +1,32 @@
 version: '3.8'
 services:
-  mongodb:
+  db:
       image: mongo:latest
-      container_name: mongodb
+      container_name: coworkers-1337-db-mongo
       hostname: mongodb
       volumes:
           - ./db/.docker/mongodb/mongod.conf:/etc/mongod.conf
           - ./db/.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
           - ./db/.docker/mongodb/data/db/:/data/db/
           - ./db/.docker/mongodb/data/log/:/var/log/mongodb/
-      environment:
-          MONGO_INITDB_ROOT_USERNAME: "sa"
-          MONGO_INITDB_ROOT_PASSWORD: "123"
-          MONGO_INITDB_DATABASE: "config"
+      env_file:
+          - ./.env
       ports:
           - "27018:27017"
+      restart: always
       command: ["-f", "/etc/mongod.conf/mongod.conf"]
+  api:
+      container_name: coworkers-1337-api
+      image: coworkers-1337-api:latest
+      depends_on:
+        - "db"
+      build:
+          context: ../
+          dockerfile: ./docker/api/Dockerfile
+      env_file:
+          - ./.env
+      volumes:
+          - ../:/app/
+      ports:
+          - "3002:3002"
+      restart: always
